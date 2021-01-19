@@ -3,8 +3,9 @@ import * as Brs from ".";
 import * as Expr from "../parser/Expression";
 import { Scope } from "../interpreter/Environment";
 import { Location } from "../lexer";
-import { Int32 } from "./Int32";
 import { Float } from "./Float";
+import { Int32 } from "./Int32";
+import { Int64 } from "./Int64";
 import { Double } from "./Double";
 
 /** An argument to a BrightScript `function` or `sub`. */
@@ -139,6 +140,9 @@ export class Callable implements Brs.BrsValue {
     /** The signature of this callable within the BrightScript runtime. */
     readonly signatures: SignatureAndImplementation[];
 
+    /** Allows roku GetInterface function to know if this is a function  */
+    readonly interfaces: Map<String, Object>;
+
     /**
      * Calls the function this `Callable` represents with the provided `arg`uments using the
      * provided `Interpreter` instance.
@@ -190,6 +194,7 @@ export class Callable implements Brs.BrsValue {
     constructor(name: string | undefined, ...signatures: SignatureAndImplementation[]) {
         this.name = name;
         this.signatures = signatures;
+        this.interfaces = new Map([["iffunction", this]]);
     }
 
     lessThan(other: Brs.BrsType): Brs.BrsBoolean {
@@ -271,6 +276,14 @@ export class Callable implements Brs.BrsValue {
                 received.kind === Brs.ValueKind.Float
             ) {
                 args[index] = new Int32(received.getValue());
+                return;
+            }
+
+            if (
+                expected.type.kind === Brs.ValueKind.Int64 &&
+                received.kind === Brs.ValueKind.Int32
+            ) {
+                args[index] = new Int64(received.getValue());
                 return;
             }
 

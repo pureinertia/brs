@@ -1,5 +1,13 @@
 import { Identifier } from "../lexer";
-import { BrsType, RoAssociativeArray, Int32, BrsInvalid, RoSGNode, Callable } from "../brsTypes";
+import {
+    BrsType,
+    RoAssociativeArray,
+    Int32,
+    BrsInvalid,
+    RoSGNode,
+    Callable,
+    BrsString,
+} from "../brsTypes";
 import { ComponentDefinition } from "../componentprocessor";
 import { BrsError } from "../Error";
 
@@ -28,6 +36,7 @@ export class Environment {
         } else {
             this.rootM = rootM;
         }
+        this.mPointer.set(new BrsString("global"), this.rootM);
     }
     /**
      * Functions that are always accessible.

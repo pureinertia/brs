@@ -36,7 +36,19 @@ export const GetInterface = new Callable("GetInterface", {
         returns: ValueKind.Interface,
     },
     impl: (interpreter, object: BrsComponent, ifname: BrsString): BrsInterface | BrsInvalid => {
-        return object.interfaces.get(ifname.value.toLowerCase()) || BrsInvalid.Instance;
+        if (object.interfaces)
+            return object.interfaces.get(ifname.value.toLowerCase()) || BrsInvalid.Instance;
+        return BrsInvalid.Instance;
+    },
+});
+
+export const Box = new Callable("Box", {
+    signature: {
+        args: [new StdlibArgument("object", ValueKind.Dynamic)],
+        returns: ValueKind.Interface,
+    },
+    impl: (interpreter, object) => {
+        return object;
     },
 });
 

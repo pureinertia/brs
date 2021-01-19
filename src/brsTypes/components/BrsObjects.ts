@@ -14,6 +14,8 @@ import { roInt } from "./RoInt";
 import { Double } from "../Double";
 import { Float } from "../Float";
 import { Int32 } from "../Int32";
+import { RoByteArray } from "./RoByteArray";
+import { RoEVPDigest } from "./RoEVPDigest";
 import { Interpreter } from "../../interpreter";
 import { roInvalid } from "./RoInvalid";
 
@@ -32,6 +34,8 @@ export const BrsObjects = new Map<string, Function>([
         "roregex",
         (_: Interpreter, expression: BrsString, flags: BrsString) => new RoRegex(expression, flags),
     ],
+    ["roevpdigest", (_: Interpreter) => new RoEVPDigest()],
+    ["robytearray", (_: Interpreter) => new RoByteArray()],
     ["rostring", (_: Interpreter) => new RoString()],
     ["roboolean", (_: Interpreter, literal: BrsBoolean) => new roBoolean(literal)],
     ["rodouble", (_: Interpreter, literal: Double) => new roDouble(literal)],

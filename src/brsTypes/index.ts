@@ -44,6 +44,8 @@ export * from "./components/RoString";
 export * from "./components/RoBoolean";
 export * from "./components/RoDouble";
 export * from "./components/RoFloat";
+export * from "./components/RoEVPDigest";
+export * from "./components/RoByteArray";
 export * from "./components/RoInt";
 export * from "./components/RoInvalid";
 export * from "./components/RoSGNodeEvent";
